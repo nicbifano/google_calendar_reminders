@@ -97,7 +97,7 @@ function sendEmailRemindersFromSheet() {
       const formattedTime = Utilities.formatDate(startTime, Session.getScriptTimeZone(), "EEE MMM dd, yyyy @ hh:mm a");
 
       const subject = `📅 Reminder: ${title}`;
-      const body = `You have an upcoming meeting:\n\nTitle: ${title}\nTime: ${formattedTime}\n\nDetails:\n${description}`;
+      const body = `You have an upcoming meeting:\n\nTitle: ${title}\nTime: ${formattedTime} PST\n\nDetails:\n${description}`;
 
       recipients.forEach(email => {
         MailApp.sendEmail(email, subject, body);
