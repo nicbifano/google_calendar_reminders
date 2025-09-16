@@ -31,6 +31,9 @@ function pullCalendarEventsToSheet() {
     const description = event.getDescription() || "";
     const eventKey = id + "|" + startTime.toISOString();
 
+    // Default logic: if it came from Calendly, mark Send Email? as "Yes"
+    const isCalendly = description.toLowerCase().includes("calendly");
+
     const row = [
       id,
       title,
@@ -38,8 +41,8 @@ function pullCalendarEventsToSheet() {
       endTime,
       guestEmails,
       description,
-      "No",
-      "No"
+      "No",                       // Reminder Sent?
+      isCalendly ? "Yes" : "No"   // Send Email?
     ];
 
     if (eventMap.has(eventKey)) {
