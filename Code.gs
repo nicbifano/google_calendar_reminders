@@ -18,7 +18,7 @@ function pullCalendarEventsToSheet() {
 
   const now = new Date();
   const endDate = new Date();
-  endDate.setDate(now.getDate() + 1); // Only pull 24h ahead if you're only sending 1-hour reminders
+  endDate.setDate(now.getDate() + 2); // Only pull 48h ahead if you're only sending 1-hour reminders
 
   const events = calendar.getEvents(now, endDate);
 
