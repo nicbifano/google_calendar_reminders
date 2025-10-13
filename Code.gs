@@ -112,3 +112,60 @@ function sendEmailRemindersFromSheet() {
 
   Logger.log("1-hour reminders sent where applicable.");
 }
+
+/**
+ * Creates (or replaces) a time-based trigger dynamically.
+ * @param {string} functionName - the function to schedule
+ * @param {number} minutes - interval in minutes (must be 1–60)
+ */
+function createTrigger(functionName, minutes) {
+  if (!functionName || !minutes) {
+    throw new Error("Usage: createTrigger('functionName', 15)");
+  }
+
+  // Safety check on interval
+  if (minutes < 1 || minutes > 60) {
+    throw new Error("Minutes must be between 1 and 60");
+  }
+
+  // Remove any existing triggers for this function
+  const existing = ScriptApp.getProjectTriggers();
+  for (const t of existing) {
+    if (t.getHandlerFunction() === functionName) {
+      ScriptApp.deleteTrigger(t);
+    }
+  }
+
+  // Create new time-based trigger
+  ScriptApp.newTrigger(functionName)
+    .timeBased()
+    .everyMinutes(minutes)
+    .create();
+
+  SpreadsheetApp.getActiveSpreadsheet().toast(
+    `✅ Trigger created: ${functionName} every ${minutes} min`
+  );
+}
+
+/**
+ * Deletes all triggers in this project
+ */
+function deleteAllTriggers() {
+  const triggers = ScriptApp.getProjectTriggers();
+  triggers.forEach(t => ScriptApp.deleteTrigger(t));
+  SpreadsheetApp.getActiveSpreadsheet().toast("🗑️ All triggers deleted");
+}
+
+function trigger15(){
+	createTrigger("pullCalendarEventsToSheet", 15);
+}
+
+function trigger30(){
+	createTrigger("sendEmailRemindersFromSheet", 30);
+}
+
+function triggers(){
+	trigger15();
+	trigger30();
+}
+
