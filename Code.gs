@@ -155,6 +155,7 @@ function deleteAllTriggers() {
   triggers.forEach(t => ScriptApp.deleteTrigger(t));
   SpreadsheetApp.getActiveSpreadsheet().toast("🗑️ All triggers deleted");
 }
+<<<<<<< Updated upstream
 
 function trigger15(){
 	createTrigger("pullCalendarEventsToSheet", 15);
@@ -169,3 +170,5 @@ function triggers(){
 	trigger30();
 }
 
+=======
+>>>>>>> Stashed changes
